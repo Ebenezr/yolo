@@ -1,14 +1,25 @@
 # Stage 1 - the build process
-FROM node:18.0.0-alpine as build-deps
+FROM node:16.0.0-alpine as build-deps
+
+LABEL author="#Ebenezr"
+
 WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
-RUN apk add --no-cache yarn
-RUN yarn
-COPY . ./
+
+COPY package.json ./
+
+RUN npm install
+
+COPY . .
+
 RUN yarn build
 
 # Stage 2 - the production environment
 FROM nginx:1.12-alpine
-COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
+
+WORKDIR /usr/share/nginx/html
+
+COPY --from=build-deps /usr/src/app/build .
+
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
