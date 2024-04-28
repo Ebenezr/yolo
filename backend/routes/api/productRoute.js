@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 
 // Product Model
@@ -6,58 +6,68 @@ const Product = require('../../models/Products');
 
 // @route GET /products
 // @desc Get ALL products
-router.get('/', (req,res)=>{
+router.get('/', async (req, res) => {
+  try {
     // Fetch all products from database
-    Product.find({}, (error, products)=>{
-        if (error) console.log(error)
-        res.json(products)
-    })
-})
+    const products = await Product.find({});
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // @route POST /products
 // @desc  Create a product
-router.post('/', (req,res)=>{
-    
-    // Create a product item
-    const newProduct = new Product({
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        quantity: req.body.quantity,
-    });
+router.post('/', async (req, res) => {
+  // Create a product item
+  const newProduct = new Product({
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    quantity: req.body.quantity,
+  });
 
-    newProduct.save((err, product)=>{
-        if (err) console.log(err)
-        res.json(product)
-    })
-})
+  try {
+    const product = await newProduct.save();
+    res.json(product);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Failed to save product' });
+  }
+});
 // @route PUT api/products/:id
 // @desc  Update a product
-router.put('/:id', (req,res)=>{
-    // Update a product in the database
-    Product.updateOne({_id:req.params.id},{
+router.put('/:id', async (req, res) => {
+  // Update a product in the database
+  try {
+    await Product.updateOne(
+      { _id: req.params.id },
+      {
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
         quantity: req.body.quantity,
-        photo:req.body.photo
-    }, {upsert: true}, (err)=>{
-        if(err) console.log(err);
-        res.json({success:true})
-    })
-})
+        photo: req.body.photo,
+      },
+      { upsert: true }
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false });
+  }
+});
 // @route DELETE api/products/:id
 // @desc  Delete a product
-router.delete('/:id', (req,res)=>{
-    // Delete a product from database
-    Product.deleteOne({_id: req.params.id}, (err)=>{
-        if (err){
-            console.log(err)
-            res.json({success:false})
-        }else{
-            res.json({success:true})
-        }
-    })
-})
+router.delete('/:id', async (req, res) => {
+  // Delete a product from database
+  try {
+    await Product.deleteOne({ _id: req.params.id });
+    res.json({ success: true });
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false });
+  }
+});
 
 module.exports = router;
