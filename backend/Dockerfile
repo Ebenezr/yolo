@@ -17,6 +17,6 @@ WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/. .
 
-EXPOSE 8080
+EXPOSE 5000
 
 CMD ["node", "server.js"]
