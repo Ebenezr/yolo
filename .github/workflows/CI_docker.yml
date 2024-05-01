@@ -43,18 +43,3 @@ jobs:
         context: ./client
         push: true
         tags: ${{ secrets.DOCKERHUB_USER }}/yolo-client:${{ steps.package-version-client.outputs.version }}
-
-    - name: Push Backend Image
-      uses: docker/build-push-action@v4
-      with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          push: true
-
-
-    - name: Push Client Image
-      uses: docker/build-push-action@v4
-      with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          push: true
