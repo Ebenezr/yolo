@@ -1,6 +1,6 @@
 {
   "name": "yolo_app",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "Yolomy app built with MERN stack",
   "main": "server.js",
   "scripts": {
