@@ -7,21 +7,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        component: ["client", "server"]
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Get Client version
-      id: package-version-client
-      run: echo "::set-output name=version::$(jq -r .version ./client/package.json)"
-
-    - name: Get Server version
-      id: package-version-server
-      run: echo "::set-output name=version::$(jq -r .version ./backend/package.json)"
+      uses: actions/checkout@v2
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
+
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
 
     - name: Login to Docker Hub
       uses: docker/login-action@v2
@@ -30,16 +33,15 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and push Backend Image
-      uses: docker/build-push-action@v4
-      with:
-        context: ./backend
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-server:${{ steps.package-version-server.outputs.version }}
+    - name: Get version
+      id: package-version
+      run: echo "::set-output name=version::$(jq -r .version ./${{ matrix.component }}/package.json)"
 
-    - name: Build and push Client Image
-      uses: docker/build-push-action@v4
+    - name: Build and push Image
+      uses: docker/build-push-action@v2
       with:
-        context: ./client
+        context: ./${{ matrix.component }}
         push: true
-        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-client:${{ steps.package-version-client.outputs.version }}
+        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-${{ matrix.component }}:${{ steps.package-version.outputs.version }}
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
