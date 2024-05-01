@@ -14,14 +14,15 @@ jobs:
 
     - name: Get version
       id: package-version
-      run: echo "::set-output name=version::$(jq -r .version package.json)"
+      run: echo "::set-output name=version::$(jq -r .version ./package.json)"
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
     - name: Login to Docker Hub
-      uses: docker/login-action@v1
+      uses: docker/login-action@v2
       with:
+        registry: docker.io
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -30,26 +31,26 @@ jobs:
       with:
         context: ./backend
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/yolo-server:${{ steps.package-version.outputs.content }}
+        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-server:${{ steps.package-version.outputs.content }}
 
     - name: Build and push Client Image
       uses: docker/build-push-action@v4
       with:
         context: ./client
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/yolo-client:${{ steps.package-version.outputs.content }}
+        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-client:${{ steps.package-version.outputs.content }}
 
     - name: Push Backend Image
       uses: docker/build-push-action@v4
       with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           push: true
 
 
     - name: Push Client Image
       uses: docker/build-push-action@v4
       with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           push: true
