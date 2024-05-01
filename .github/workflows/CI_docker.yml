@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        component: ["client", "server"]
+        component: ["client", "backend"]
 
     steps:
     - name: Checkout code
