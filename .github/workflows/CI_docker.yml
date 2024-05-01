@@ -35,14 +35,14 @@ jobs:
       with:
         context: ./backend
         push: true
-        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-server:${{ steps.package-version-server.outputs.content }}
+        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-server:${{ steps.package-version-server.outputs.version }}
 
     - name: Build and push Client Image
       uses: docker/build-push-action@v4
       with:
         context: ./client
         push: true
-        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-client:${{ steps.package-version-client.outputs.content }}
+        tags: ${{ secrets.DOCKERHUB_USER }}/yolo-client:${{ steps.package-version-client.outputs.version }}
 
     - name: Push Backend Image
       uses: docker/build-push-action@v4
