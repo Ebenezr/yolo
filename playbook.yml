@@ -1,0 +1,20 @@
+---
+- name: Provisioning webservers
+  hosts: all
+  become: yes
+  vars:
+    repo_url: https://github.com/Ebenezr/yolo.git
+    user: ubuntu
+    dest: /home/{{ user }}/yolo
+
+  tasks:
+    - name: Clone the repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ dest }}"
+        update: yes
+        force: yes
+        clone: yes
+        accept_hostkey: yes
+        recursive: yes
+        version: master
