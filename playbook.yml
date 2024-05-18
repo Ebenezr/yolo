@@ -42,5 +42,22 @@
     vars:
       dockerfile_path: "{{ dest }}/backend"
 
+  post_tasks:
+    - name: Run backend container
+      docker_container:
+        name: backend
+        image: backend:1.0.0
+        state: started
+        ports:
+          - "5000:5000"
+        restart_policy: always
 
+    - name: Run client container
+      docker_container:
+        name: client
+        image: client:1.0.0
+        state: started
+        ports:
+          - "3000:3000"
+        restart_policy: always
 
