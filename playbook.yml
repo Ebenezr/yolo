@@ -6,10 +6,28 @@
     repo_url: https://github.com/Ebenezr/yolo.git
     user: ubuntu
     dest: /home/{{ user }}/yolo
-
-
+    docker_images:
+      - name: backend
+        tag: 1.0.0
+        path: "{{ dest }}/backend"
+        port: "5000:5000"
+      - name: client
+        tag: 1.0.0
+        path: "{{ dest }}/client"
+        port: "3000:80"
 
   tasks:
+    - name: Install Dependacies
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Install Docker
+      become: yes
+      pip:
+        name: docker==6.1.3
+        state: present
+
     - name: Clone the repository
       git:
         repo: "{{ repo_url }}"
@@ -21,17 +39,6 @@
         recursive: yes
         version: master
 
-    - name: install pip3
-      apt:
-        name: python3-pip
-        state: present
-
-    - name: Install Docker
-      become: yes
-      pip:
-        name: docker==6.1.3
-        state: present
-
   roles:
   - role: build_client
     vars:
@@ -41,22 +48,22 @@
     vars:
       dockerfile_path: "{{ dest }}/backend"
 
-  post_tasks:
-    - name: Run backend container
-      docker_container:
-        name: backend
-        image: backend:1.0.0
-        state: started
-        ports:
-          - "5000:5000"
-        restart_policy: always
+  handlers:
+  - name: restart docker
+    docker_container:
+      name: "{{ item.name }}"
+      state: started
+      restart: yes
+    loop: "{{ docker_images }}"
 
-    - name: Run client container
+  post_tasks:
+    - name: Run Docker containers
       docker_container:
-        name: client
-        image: client:1.0.0
+        name: "{{ item.name }}"
+        image: "{{ item.name }}:{{ item.tag }}"
         state: started
-        ports:
-          - "3000:80"
-        restart_policy: always
+        ports: "{{ item.port }}"
+
+      loop: "{{ docker_images }}"
+      notify: restart docker
 
