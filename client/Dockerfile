@@ -1,5 +1,5 @@
 # Stage 1 - the build process
-FROM node:16.0.0-alpine as build-deps
+FROM node:16.0.0-alpine AS build-deps
 
 LABEL author="#Ebenezr"
 

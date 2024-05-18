@@ -1,7 +1,6 @@
 ---
 - name: Provisioning webservers
   hosts: all
-  # gather_facts: false
   become: yes
   vars:
     repo_url: https://github.com/Ebenezr/yolo.git
@@ -58,6 +57,6 @@
         image: client:1.0.0
         state: started
         ports:
-          - "3000:3000"
+          - "3000:80"
         restart_policy: always
 
