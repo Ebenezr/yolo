@@ -1,5 +1,13 @@
-resource "null_resource" "ansible_provisioner" {
-  provisioner "local-exec" {
-    command = "ansible-playbook ../../playbook.yml"
+terraform {
+  required_providers {
+    vagrant = {
+      source  = "bmatcuk/vagrant"
+      version = "~> 4.0.0"
+    }
   }
+}
+
+resource "vagrant_vm" "vagrantbox" {
+  vagrantfile_dir = "../../"
+  get_ports = true
 }
