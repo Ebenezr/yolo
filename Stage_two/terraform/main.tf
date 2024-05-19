@@ -11,3 +11,4 @@ resource "vagrant_vm" "vagrantbox" {
   vagrantfile_dir = "../../"
   get_ports = true
 }
+

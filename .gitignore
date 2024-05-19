@@ -4,3 +4,4 @@
 Stage_two/terraform/terraform.tfstate
 Stage_two/terraform/terraform.tfstate.backup
 Stage_two/terraform/.terraform.lock.hcl
+.env
