@@ -9,6 +9,7 @@ This project is an ecommerce microservices store built with a React frontend and
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
 - [Running with Docker Compose](#running-with-docker-compose)
+- [Running with Ansible](#running-with-ansible)
 - [Screenshots](#screenshots)
 
 # Requirements
@@ -61,6 +62,23 @@ cd client
 If you have Docker installed, you can use Docker Compose to run the application:
 ```bash
 docker-compose up
+```
+
+## Running with Ansible
+
+If you have Ansible installed, you can use it to automate the deployment of the application. Here's a basic example of how you might do this:
+
+1. First, install Ansible , Vagrant, Virtual Box and terraform on your local machine. You can do this with the following command:
+
+```bash
+sudo apt-get update
+sudo apt-get install ansible vagrant virtualbox
+```
+
+
+2. Run the playbook with the following command:
+```bash
+ansible-playbook execute_terraform.yml
 ```
 
  ## Go ahead a nd add a product (note that the price field only takes a numeric input)
