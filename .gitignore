@@ -1,1 +1,6 @@
 /mongo-data
+/.vagrant/**
+/Stage_two/terraform/.terraform/
+Stage_two/terraform/terraform.tfstate.backup
+Stage_two/terraform/.terraform.lock.hcl
+.env

@@ -1,4 +1,4 @@
-FROM node:16.13.0-alpine as builder
+FROM node:16.13.0-alpine AS builder
 
 LABEL author="#Ebenezr"
 
@@ -16,6 +16,8 @@ FROM node:16.13.0-alpine
 WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/. .
+
+COPY .env ./
 
 EXPOSE 5000
 
