@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: yolo-client
-  replicas: 1
+  replicas: 2
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -22,7 +22,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: yolo-client
-          image: blindx604/yolo-client:1.0.2
+          image: blindx604/yolo-client:1.0.3
           resources:
             requests:
               cpu: 100m
@@ -50,6 +50,11 @@ spec:
           ports:
             - containerPort: 80
               name: yolo-client
+
+          env:
+            - name: REACT_APP_API_URL
+              value: http://yolo-server:5000
+
       restartPolicy: Always
 
 ---
