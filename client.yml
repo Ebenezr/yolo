@@ -51,3 +51,20 @@ spec:
             - containerPort: 80
               name: yolo-client
       restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo-client
+  labels:
+    app: yolo-client
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30001
+  selector:
+    app: yolo-client
+  type: LoadBalancer
