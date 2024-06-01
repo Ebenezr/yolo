@@ -65,3 +65,18 @@ spec:
             - containerPort: 5000
               name: yolo-server
       restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo-server
+  labels:
+    app: yolo-server
+spec:
+  selector:
+    app: yolo-server
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
