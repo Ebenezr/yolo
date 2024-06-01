@@ -17,8 +17,6 @@ WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/. .
 
-COPY .env ./
-
 EXPOSE 5000
 
 CMD ["node", "server.js"]

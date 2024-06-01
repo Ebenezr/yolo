@@ -44,6 +44,11 @@ app.use(cors());
 // Use Route
 app.use('/api/products', productRoute);
 
+// health check
+app.get('/health-check', (req, res) => {
+  res.send('Server is up and running');
+});
+
 // Define the PORT
 const PORT = process.env.PORT || 5000;
 
