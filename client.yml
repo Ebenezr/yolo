@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: yolo-client
-  replicas: 2
+  replicas: 1
   strategy:
     rollingUpdate:
       maxSurge: 25%
