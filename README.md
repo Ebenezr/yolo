@@ -10,6 +10,7 @@ This project is an ecommerce microservices store built with a React frontend and
 - [Running the Application](#running-the-application)
 - [Running with Docker Compose](#running-with-docker-compose)
 - [Running with Ansible](#running-with-ansible)
+- [Deploy to Cloud/Minikube](#running-with-k8s)
 - [Screenshots](#screenshots)
 
 # Requirements
@@ -83,6 +84,18 @@ ansible-playbook execute_terraform.yml
 
  ## Go ahead a nd add a product (note that the price field only takes a numeric input)
 
+
+## Running with k8s
+
+Give execute permision to script deploy.sh
+```sh
+chmod +x deploy.sh
+```
+
+execute the scrip
+```sh
+./deploy.sh
+```
 ## Screenshots
 ## App
  ![image](https://github.com/Vinge1718/yolo/assets/37300065/400c8e09-3cfd-4904-b030-4f25aa593ed6)
