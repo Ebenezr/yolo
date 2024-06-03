@@ -11,11 +11,15 @@ services:
       - yolo-network
     restart: always
   client:
-    image: blindx604/yolo-client:1.0.1
+    image: blindx604/yolo-client:1.0.9
     networks:
       - yolo-network
+    environment:
+      - REACT_APP_API_URL=http://server:5000
     ports:
       - '80:80'
+    depends_on:
+      - server
     restart: always
   mongodb:
     image: mongo

@@ -23,7 +23,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: yolo-client
-          image: blindx604/yolo-client:1.0.3
+          image: blindx604/yolo-client:1.0.9
           resources:
             requests:
               cpu: 100m
@@ -51,7 +51,6 @@ spec:
           ports:
             - containerPort: 80
               name: yolo-client
-
           env:
             - name: REACT_APP_API_URL
               value: http://yolo-server:5000
@@ -71,7 +70,7 @@ spec:
     - port: 80
       targetPort: 80
       protocol: TCP
-      nodePort: 30001
+      nodePort: 30000
   selector:
     app: yolo-client
   type: LoadBalancer
