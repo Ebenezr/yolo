@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: yolo-config
+  namespace: yolo
+data:
+  REACT_APP_API_URL: http://yolo-server:5000

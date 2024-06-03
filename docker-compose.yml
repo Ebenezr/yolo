@@ -11,7 +11,7 @@ services:
       - yolo-network
     restart: always
   client:
-    image: blindx604/yolo-client:1.0.9
+    image: blindx604/yolo-client:1.0.10
     networks:
       - yolo-network
     environment:

@@ -75,10 +75,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: yolo-server
+  name: yolo-service
   namespace: yolo
   labels:
-    app: yolo-server
+    app: yolo-service
 spec:
   selector:
     app: yolo-server

@@ -76,6 +76,8 @@ class ProductControl extends Component {
   }
 
   componentDidMount() {
+    console.log('ComponentDidMount reached!!');
+    console.log(process.env.REACT_APP_API_URL);
     axios.get(`${process.env.REACT_APP_API_URL}/api/products`).then((res) => {
       console.log(res);
       this.setState({

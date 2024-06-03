@@ -74,6 +74,8 @@ kind: Service
 metadata:
   name: mongodb-service
   namespace: yolo
+  labels:
+    app: mongodb-service
 spec:
   selector:
     app: mongodb
