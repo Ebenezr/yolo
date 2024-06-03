@@ -53,7 +53,7 @@ spec:
               name: yolo-client
           env:
             - name: REACT_APP_API_URL
-              value: http://yolo-service:5000
+              value: http://yolo-service.yolo.svc.cluster.local:5000
 
       restartPolicy: Always
 
