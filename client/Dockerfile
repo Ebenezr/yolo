@@ -14,12 +14,23 @@ COPY . .
 RUN yarn build
 
 # Stage 2 - the production environment
-FROM nginx:1.12-alpine
+FROM node:16.0.0-alpine
 
-WORKDIR /usr/share/nginx/html
+WORKDIR /usr/src/app
 
-COPY --from=build-deps /usr/src/app/build .
 
-EXPOSE 80
+ENV NODE_ENV production
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+COPY --from=build-deps /usr/src/app/. .
+
+RUN chown -R nextjs:nodejs /usr/src/app
+
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["yarn", "start"]
+
