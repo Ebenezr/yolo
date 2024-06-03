@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: yolo-client
-  replicas: 1
+  replicas:
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -70,7 +70,7 @@ spec:
     - port: 3000
       targetPort: 3000
       protocol: TCP
-      nodePort: 30000
+      nodePort: 30002
   selector:
     app: yolo-client
   type: LoadBalancer
